@@ -37,7 +37,7 @@ public class DeathScreenUI : MonoBehaviour
 
     public void OnRetryPressed()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void StartReveal()
