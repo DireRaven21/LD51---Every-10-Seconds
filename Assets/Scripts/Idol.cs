@@ -112,16 +112,32 @@ public class Idol
         
         m_teleportTimer = 0f;
         m_nextTeleport = Random.Range(m_mono.m_teleporTimerMin, m_mono.m_teleporTimerMax);
-        
-        Vector2 offset = Random.insideUnitCircle * 25f;
-        Vector3 tpPos = playerPos + new Vector3(offset.x, 0, offset.y);
-        NavMeshHit navHit;
-        if (NavMesh.SamplePosition(tpPos, out navHit, 10.0f, NavMesh.AllAreas))
+        Vector3 tpPos = Vector3.zero;
+
+        int count = 0;
+        bool foundTpPoint = false;
+        while (!foundTpPoint)
         {
-            tpPos = navHit.position;
+            Vector2 offset = Random.insideUnitCircle * 25f;
+            tpPos = playerPos + new Vector3(offset.x, 0, offset.y);
+            
+            NavMeshHit navHit;
+            if (NavMesh.SamplePosition(tpPos, out navHit, 1.0f, NavMesh.AllAreas))
+            {
+                tpPos = navHit.position;
+                foundTpPoint = true;
+            }
+
+            if (count > 100)
+            {
+                return;
+            }
+            count++;
         }
 
         m_agent.Warp(tpPos);
+        
+        Debug.Log("Idol Teleported!");
     }
 
     private void StartLookStunLock()

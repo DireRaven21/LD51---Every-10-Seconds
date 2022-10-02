@@ -122,6 +122,7 @@ public class Director : MonoBehaviour
             {
                 //win the game
                 m_gameState = GameState.WON;
+                m_uiWinScreen.gameObject.SetActive(true);
                 m_uiWinScreen.StartReveal();
                 m_idol.StartWinCeremony(m_idolDeathPos.position);
             }
@@ -141,6 +142,7 @@ public class Director : MonoBehaviour
 
     private void DoDeathCeremony()
     {
+        m_uiDeathScreen.gameObject.SetActive(true);
         m_uiDeathScreen.StartReveal();
         m_CamAudioSrc.PlayOneShot(m_audioBank.Clips[0]);
     }

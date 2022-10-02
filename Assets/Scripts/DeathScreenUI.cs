@@ -8,7 +8,6 @@ using Unity.Mathematics;
 
 public class DeathScreenUI : MonoBehaviour
 {
-    public Image m_background;
     public TMP_Text m_text;
     public Button m_exit, m_retry;
 
@@ -48,8 +47,6 @@ public class DeathScreenUI : MonoBehaviour
 
     IEnumerator RevealState()
     {
-        m_background.enabled = true;
-
         yield return new WaitForSeconds(m_initialPause);
         
         Color textStart = m_text.color;
