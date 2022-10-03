@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Unity.Mathematics;
 
@@ -24,6 +25,7 @@ public class Director : MonoBehaviour
     
     public DeathScreenUI m_uiDeathScreen;
     public WinScreenUI m_uiWinScreen;
+    public TMP_Text m_cursorLocked;
 
     public float m_fogMax, m_fogMin;
     public float m_fogSpeed;
@@ -46,6 +48,10 @@ public class Director : MonoBehaviour
     private float m_timer;
     private bool m_thickFog;
     private int m_lastKeysPlacedCount;
+    
+#if UNITY_WEBGL
+    private bool m_isCursorLocked = false;
+#endif
 
     private GameState m_gameState;
     
@@ -53,7 +59,8 @@ public class Director : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
-        
+        Cursor.lockState = CursorLockMode.Locked;
+
         m_player = new Player(m_playerObj);
         m_idol = new Idol(m_idolObj);
 
@@ -75,11 +82,24 @@ public class Director : MonoBehaviour
         RenderSettings.fogDensity = m_fogMin;
 
         m_billboards = FindObjectsOfType<Billboard>();
+        
+#if UNITY_WEBGL
+        m_cursorLocked.gameObject.SetActive(true);
+#endif
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+#if UNITY_WEBGL
+        if (!m_isCursorLocked && Input.GetMouseButtonDown(0))
+        {
+            m_isCursorLocked = true;
+            m_cursorLocked.gameObject.SetActive(false);
+        }
+#endif
+        
         if(m_gameState == GameState.LOST)
             return;
 

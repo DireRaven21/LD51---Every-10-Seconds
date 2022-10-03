@@ -78,6 +78,7 @@ public class DeathScreenUI : MonoBehaviour
             m_timer += Time.deltaTime;
         }
         
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         m_exit.interactable = m_retry.interactable = true;
     }

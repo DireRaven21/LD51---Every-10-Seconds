@@ -29,7 +29,7 @@ public class Player
 
     public void Move(float movespeed)
     {
-        Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
 
         moveDir = m_transform.TransformDirection(moveDir) * movespeed;
         m_charController.SimpleMove(moveDir);
@@ -38,7 +38,6 @@ public class Player
     public void Look()
     {
         float horizontal = Input.GetAxis("Mouse X");
-        horizontal *= 5f;
         m_transform.rotation *= Quaternion.Euler(0, horizontal, 0);
     }
 
